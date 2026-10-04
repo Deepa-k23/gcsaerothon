@@ -1,0 +1,17 @@
+module AeroTHON.Src
+
+UavDashboard            1.0 UavDashboard.qml
+AeroTopBar              1.0 AeroTopBar.qml
+AeroNavRail             1.0 AeroNavRail.qml
+AeroLeftPanel           1.0 AeroLeftPanel.qml
+AeroHorizon             1.0 AeroHorizon.qml
+AeroQuickActions        1.0 AeroQuickActions.qml
+AeroMessageFeed         1.0 AeroMessageFeed.qml
+AeroCameraColumn        1.0 AeroCameraColumn.qml
+AeroCameraPanel         1.0 AeroCameraPanel.qml
+AeroTelemetryRail       1.0 AeroTelemetryRail.qml
+AeroPayloadConfirmation 1.0 AeroPayloadConfirmation.qml
+AeroNodeTooltip         1.0 AeroNodeTooltip.qml
+AeroDetectionMapLayer   1.0 AeroDetectionMapLayer.qml
+AeroCompactTelemetryBox 1.0 AeroCompactTelemetryBox.qml
+AeroStartupOverlay      1.0 AeroStartupOverlay.qml

@@ -1,0 +1,76 @@
+<RCC>
+    <!-- QGC Override resources + screen QML (prefix /Custom/qml, aliases under QGroundControl/) -->
+    <qresource prefix="/Custom/qml">
+        <!-- Core QGC overrides -->
+        <file alias="QGroundControl/FlyView/FlyViewCustomLayer.qml">src/FlyViewCustomLayer.qml</file>
+        <file alias="QGroundControl/FlyView/FlyViewWidgetLayer.qml">src/FlyViewWidgetLayer.qml</file>
+        <file alias="QGroundControl/Toolbar/FlyViewToolBar.qml">src/FlyViewToolBar.qml</file>
+        <!-- Dashboard orchestrator -->
+        <file alias="QGroundControl/FlyView/UavDashboard.qml">src/UavDashboard.qml</file>
+        <!-- Screen QML components -->
+        <file alias="QGroundControl/FlyView/AeroTopBar.qml">src/AeroTopBar.qml</file>
+        <file alias="QGroundControl/FlyView/AeroGlobalShell.qml">src/AeroGlobalShell.qml</file>
+        <file alias="QGroundControl/FlyView/AeroStartupOverlay.qml">src/AeroStartupOverlay.qml</file>
+        <file alias="QGroundControl/FlyView/AeroNavRail.qml">src/AeroNavRail.qml</file>
+        <file alias="QGroundControl/FlyView/AeroLeftPanel.qml">src/AeroLeftPanel.qml</file>
+        <file alias="QGroundControl/FlyView/AeroCompactTelemetryBox.qml">src/AeroCompactTelemetryBox.qml</file>
+        <file alias="QGroundControl/FlyView/AeroHorizon.qml">src/AeroHorizon.qml</file>
+        <file alias="QGroundControl/FlyView/AeroQuickActions.qml">src/AeroQuickActions.qml</file>
+        <file alias="QGroundControl/FlyView/AeroCameraColumn.qml">src/AeroCameraColumn.qml</file>
+        <file alias="QGroundControl/FlyView/AeroCameraPanel.qml">src/AeroCameraPanel.qml</file>
+        <file alias="QGroundControl/FlyView/AeroTelemetryRail.qml">src/AeroTelemetryRail.qml</file>
+        <file alias="QGroundControl/FlyView/AeroMessageFeed.qml">src/AeroMessageFeed.qml</file>
+        <file alias="QGroundControl/FlyView/AeroPayloadConfirmation.qml">src/AeroPayloadConfirmation.qml</file>
+        <file alias="QGroundControl/FlyView/AeroNodeTooltip.qml">src/AeroNodeTooltip.qml</file>
+        <file alias="QGroundControl/AppSettings/AeroTHONSettingsPage.qml">src/AeroTHONSettingsPage.qml</file>
+        <file alias="QGroundControl/FlyView/AeroDetectionMapLayer.qml">src/AeroDetectionMapLayer.qml</file>
+        <file alias="QGroundControl/FlyView/AeroDiagnosticPanel.qml">src/AeroDiagnosticPanel.qml</file>
+        <file alias="QGroundControl/FlyView/AeroPX4Doctor.qml">src/AeroPX4Doctor.qml</file>
+    </qresource>
+    <!-- AeroTHON application resources: theme, components, assets -->
+    <qresource prefix="/Custom/AeroTHON">
+        <!-- Theme singletons -->
+        <file alias="theme/qmldir">theme/qmldir</file>
+        <file alias="theme/AeroColors.qml">theme/AeroColors.qml</file>
+        <file alias="theme/AeroMetrics.qml">theme/AeroMetrics.qml</file>
+        <file alias="theme/AeroTypography.qml">theme/AeroTypography.qml</file>
+        <file alias="theme/AeroMotion.qml">theme/AeroMotion.qml</file>
+        <file alias="theme/AeroChartStyle.qml">theme/AeroChartStyle.qml</file>
+        <file alias="theme/AeroFonts.qml">theme/AeroFonts.qml</file>
+        <!-- Reusable components -->
+        <file alias="components/qmldir">components/qmldir</file>
+        <file alias="components/AeroTechnicalFrame.qml">components/AeroTechnicalFrame.qml</file>
+        <file alias="components/AeroButton.qml">components/AeroButton.qml</file>
+        <file alias="components/AeroStatusDot.qml">components/AeroStatusDot.qml</file>
+        <file alias="components/AeroDataCard.qml">components/AeroDataCard.qml</file>
+        <file alias="components/AeroSparkline.qml">components/AeroSparkline.qml</file>
+        <file alias="components/AeroRingGauge.qml">components/AeroRingGauge.qml</file>
+        <file alias="components/AeroMessageRow.qml">components/AeroMessageRow.qml</file>
+        <file alias="components/AeroPreflightRow.qml">components/AeroPreflightRow.qml</file>
+        <file alias="components/AeroBadge.qml">components/AeroBadge.qml</file>
+        <file alias="components/AeroDivider.qml">components/AeroDivider.qml</file>
+        <file alias="components/AeroTrendIndicator.qml">components/AeroTrendIndicator.qml</file>
+        <file alias="components/AeroPanel.qml">components/AeroPanel.qml</file>
+        <file alias="components/AeroSectionHeader.qml">components/AeroSectionHeader.qml</file>
+        <file alias="components/AeroStatusChip.qml">components/AeroStatusChip.qml</file>
+        <file alias="components/AeroMetric.qml">components/AeroMetric.qml</file>
+        <!-- Assets -->
+        <file alias="assets/aerokle_logo_dark.png">assets/aerokle_logo_dark.png</file>
+        <file alias="assets/gcslogo.png">assets/gcslogo.png</file>
+        <file alias="assets/drone_top_view.svg">assets/drone_top_view.svg</file>
+        <!-- Bundled telemetry/HUD face (OFL) -->
+        <file alias="assets/fonts/JetBrainsMono-Regular.ttf">assets/fonts/JetBrainsMono-Regular.ttf</file>
+        <file alias="assets/fonts/JetBrainsMono-Medium.ttf">assets/fonts/JetBrainsMono-Medium.ttf</file>
+        <file alias="assets/fonts/JetBrainsMono-Bold.ttf">assets/fonts/JetBrainsMono-Bold.ttf</file>
+        <file alias="assets/fonts/Rosarivo-Regular.ttf">assets/fonts/Rosarivo-Regular.ttf</file>
+        <file alias="assets/fonts/Rosarivo-Italic.ttf">assets/fonts/Rosarivo-Italic.ttf</file>
+    </qresource>
+    <!-- Settings JSON -->
+    <qresource prefix="/Custom">
+        <file alias="json/AeroTHON.SettingsGroup.json">res/json/AeroTHON.SettingsGroup.json</file>
+    </qresource>
+    <!-- SettingsGroup resolves metadata at :/json/<Group>.SettingsGroup.json. -->
+    <qresource prefix="/json">
+        <file alias="AeroTHON.SettingsGroup.json">res/json/AeroTHON.SettingsGroup.json</file>
+    </qresource>
+</RCC>

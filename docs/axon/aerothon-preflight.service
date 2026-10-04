@@ -1,0 +1,22 @@
+[Unit]
+Description=AeroTHON MAVLink Preflight Agent
+After=network.target wfb-ng.service
+Wants=wfb-ng.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/aerothon
+Environment=AEROTHON_MAVLINK_URI=udp:0.0.0.0:14550
+Environment=AEROTHON_OWN_SYSTEM_ID=255
+Environment=AEROTHON_OWN_COMPONENT_ID=190
+Environment=AEROTHON_TARGET_SYSTEM=1
+Environment=AEROTHON_TARGET_COMPONENT=1
+ExecStart=/opt/aerothon/venv/bin/python /opt/aerothon/mavlink_preflight_agent.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<mavlink>
+  <!-- Preserve the complete MAVLink surface expected by this QGC commit, then
+       add AeroTHON's private messages below. -->
+  <include>all.xml</include>
+  <version>3</version>
+  <!-- Private competition dialect. IDs 61000-61005 must be registered before public deployment. -->
+  <enums>
+    <enum name="AEROTHON_MISSION_STATE">
+      <entry value="0" name="AEROTHON_STATE_IDLE"/>
+      <entry value="1" name="AEROTHON_STATE_PREFLIGHT"/>
+      <entry value="2" name="AEROTHON_STATE_TAKEOFF"/>
+      <entry value="3" name="AEROTHON_STATE_INITIAL_QR"/>
+      <entry value="4" name="AEROTHON_STATE_AREA_SEARCH"/>
+      <entry value="5" name="AEROTHON_STATE_BANNER_SEARCH"/>
+      <entry value="6" name="AEROTHON_STATE_CORRIDOR_ENTRY"/>
+      <entry value="7" name="AEROTHON_STATE_CORRIDOR_FLIGHT"/>
+      <entry value="8" name="AEROTHON_STATE_DELIVERY_SEARCH"/>
+      <entry value="9" name="AEROTHON_STATE_PAYLOAD_DELIVERY"/>
+      <entry value="10" name="AEROTHON_STATE_RETURN_CORRIDOR"/>
+      <entry value="11" name="AEROTHON_STATE_RTL"/>
+      <entry value="12" name="AEROTHON_STATE_LANDING"/>
+      <entry value="13" name="AEROTHON_STATE_COMPLETE"/>
+    </enum>
+    <enum name="AEROTHON_RESULT">
+      <entry value="0" name="AEROTHON_RESULT_RUNNING"/>
+      <entry value="1" name="AEROTHON_RESULT_SUCCESS"/>
+      <entry value="2" name="AEROTHON_RESULT_FAILED"/>
+      <entry value="3" name="AEROTHON_RESULT_INCOMPLETE"/>
+      <entry value="4" name="AEROTHON_RESULT_WARNING"/>
+    </enum>
+    <enum name="AEROTHON_DETECTION_TYPE">
+      <entry value="0" name="AEROTHON_DETECTION_UNKNOWN"/>
+      <entry value="1" name="AEROTHON_DETECTION_QR"/>
+      <entry value="2" name="AEROTHON_DETECTION_RED_ZONE"/>
+      <entry value="3" name="AEROTHON_DETECTION_GREEN_BANNER"/>
+      <entry value="4" name="AEROTHON_DETECTION_DELIVERY_ZONE"/>
+      <entry value="5" name="AEROTHON_DETECTION_OBSTACLE"/>
+    </enum>
+    <enum name="AEROTHON_CAMERA_ID">
+      <entry value="0" name="AEROTHON_CAMERA_FRONT"/>
+      <entry value="1" name="AEROTHON_CAMERA_NADIR"/>
+    </enum>
+    <enum name="AEROTHON_PIPELINE_STATE">
+      <entry value="0" name="AEROTHON_PIPELINE_UNKNOWN"/>
+      <entry value="1" name="AEROTHON_PIPELINE_RUNNING"/>
+      <entry value="2" name="AEROTHON_PIPELINE_STOPPED"/>
+      <entry value="3" name="AEROTHON_PIPELINE_ERROR"/>
+    </enum>
+    <enum name="AEROTHON_LINK_STATE">
+      <entry value="0" name="AEROTHON_LINK_UNKNOWN"/>
+      <entry value="1" name="AEROTHON_LINK_HEALTHY"/>
+      <entry value="2" name="AEROTHON_LINK_DEGRADED"/>
+      <entry value="3" name="AEROTHON_LINK_LOST"/>
+    </enum>
+    <enum name="AEROTHON_COMMAND_TYPE">
+      <entry value="0" name="AEROTHON_COMMAND_NOP"/>
+      <entry value="1" name="AEROTHON_COMMAND_START_PREFLIGHT"/>
+      <entry value="2" name="AEROTHON_COMMAND_START_MISSION"/>
+      <entry value="3" name="AEROTHON_COMMAND_PAUSE_MISSION"/>
+      <entry value="4" name="AEROTHON_COMMAND_RESUME_MISSION"/>
+      <entry value="5" name="AEROTHON_COMMAND_ABORT_MISSION"/>
+      <entry value="6" name="AEROTHON_COMMAND_AUTHORIZE_PAYLOAD"/>
+      <entry value="7" name="AEROTHON_COMMAND_RELEASE_PAYLOAD"/>
+      <entry value="8" name="AEROTHON_COMMAND_RESET_SESSION"/>
+    </enum>
+    <enum name="AEROTHON_ACK_RESULT">
+      <entry value="0" name="AEROTHON_ACK_ACCEPTED"/>
+      <entry value="1" name="AEROTHON_ACK_TEMPORARILY_REJECTED"/>
+      <entry value="2" name="AEROTHON_ACK_DENIED"/>
+      <entry value="3" name="AEROTHON_ACK_UNSUPPORTED"/>
+      <entry value="4" name="AEROTHON_ACK_FAILED"/>
+      <entry value="5" name="AEROTHON_ACK_IN_PROGRESS"/>
+    </enum>
+    <enum name="AEROTHON_CHECK_STATUS">
+      <entry value="0" name="AEROTHON_CHECK_PASS"/>
+      <entry value="1" name="AEROTHON_CHECK_ADVISORY"/>
+      <entry value="2" name="AEROTHON_CHECK_FAIL"/>
+      <entry value="3" name="AEROTHON_CHECK_UNKNOWN"/>
+    </enum>
+  </enums>
+  <messages>
+    <message id="61000" name="AEROTHON_STATUS">
+      <description>Confirmed Axon mission state. Emit on change and at 2 Hz.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp since boot or UNIX epoch.</field>
+      <field type="uint32_t" name="stage_elapsed_ms" units="ms">Elapsed time in the current stage.</field>
+      <field type="uint32_t" name="mission_checksum">Checksum of the active mission.</field>
+      <field type="uint16_t" name="error_code">Zero or implementation-defined active error.</field>
+      <field type="uint8_t" name="state" enum="AEROTHON_MISSION_STATE">Confirmed mission state.</field>
+      <field type="uint8_t" name="result" enum="AEROTHON_RESULT">Task result, independent of route completion.</field>
+      <field type="uint8_t" name="progress_pct" units="%" minValue="0" maxValue="100">Mission-stage progress.</field>
+      <field type="uint8_t" name="route_progress_pct" units="%" minValue="0" maxValue="100">Route completion.</field>
+      <field type="char[32]" name="active_target">Current mission target.</field>
+      <field type="char[48]" name="transition_reason">Reason for the last confirmed state transition.</field>
+    </message>
+    <message id="61001" name="AEROTHON_DETECTION">
+      <description>Latest perception detection and normalized image bounding box.</description>
+      <field type="uint64_t" name="time_usec" units="us">Source-frame timestamp.</field>
+      <field type="uint32_t" name="detection_id">Session-unique detection identifier.</field>
+      <field type="float" name="confidence" minValue="0" maxValue="1">Detection confidence.</field>
+      <field type="float" name="distance" units="m">Estimated distance, NaN when unknown.</field>
+      <field type="uint16_t" name="x" units="d%" minValue="0" maxValue="10000">Left edge in 0.01 percent units.</field>
+      <field type="uint16_t" name="y" units="d%" minValue="0" maxValue="10000">Top edge in 0.01 percent units.</field>
+      <field type="uint16_t" name="width" units="d%" minValue="0" maxValue="10000">Width in 0.01 percent units.</field>
+      <field type="uint16_t" name="height" units="d%" minValue="0" maxValue="10000">Height in 0.01 percent units.</field>
+      <field type="uint8_t" name="camera_id" enum="AEROTHON_CAMERA_ID">Source camera.</field>
+      <field type="uint8_t" name="detection_type" enum="AEROTHON_DETECTION_TYPE">Detected class.</field>
+    </message>
+    <message id="61002" name="AEROTHON_QR_RESULT">
+      <description>Decoded QR result. Repeated detection IDs allow duplicate rejection.</description>
+      <field type="uint64_t" name="time_usec" units="us">Source-frame timestamp.</field>
+      <field type="uint32_t" name="detection_id">Associated detection identifier.</field>
+      <field type="uint32_t" name="payload_crc32">CRC32 used for duplicate detection.</field>
+      <field type="uint8_t" name="camera_id" enum="AEROTHON_CAMERA_ID">Source camera.</field>
+      <field type="uint8_t" name="valid">One when decoder and mission validation passed.</field>
+      <field type="uint8_t" name="duplicate">One when already accepted during this session.</field>
+      <field type="char[96]" name="payload">UTF-8 QR payload, null terminated when shorter than the array.</field>
+    </message>
+    <message id="61003" name="AEROTHON_HEALTH">
+      <description>Axon, perception pipeline, and WFB-ng health. Emit at 2 Hz.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp since boot or UNIX epoch.</field>
+      <field type="uint32_t" name="uptime_ms" units="ms">Axon service uptime.</field>
+      <field type="uint32_t" name="available_storage_mib" units="MiB">Writable storage remaining.</field>
+      <field type="float" name="cpu_load_pct" units="%">Total CPU load.</field>
+      <field type="float" name="memory_used_pct" units="%">Memory utilization.</field>
+      <field type="float" name="temperature_c" units="degC">Highest monitored Axon temperature.</field>
+      <field type="float" name="front_fps" units="Hz">Front camera frame rate.</field>
+      <field type="float" name="nadir_fps" units="Hz">Nadir camera frame rate.</field>
+      <field type="float" name="inference_fps" units="Hz">Vision inference rate.</field>
+      <field type="float" name="inference_latency_ms" units="ms">Latest inference latency.</field>
+      <field type="float" name="wfb_packet_loss_pct" units="%">WFB-ng packet loss.</field>
+      <field type="float" name="wfb_bitrate_mbps" units="Mbit/s">WFB-ng received bitrate.</field>
+      <field type="int16_t" name="wfb_rssi_dbm" units="dBm">WFB-ng RSSI.</field>
+      <field type="int16_t" name="wfb_snr_db" units="dB">WFB-ng SNR.</field>
+      <field type="uint32_t" name="health_flags">Implementation-defined healthy subsystem bitmask.</field>
+      <field type="uint32_t" name="stale_flags">Implementation-defined stale-data bitmask.</field>
+      <field type="uint8_t" name="gstreamer_state" enum="AEROTHON_PIPELINE_STATE">Encoder pipeline state.</field>
+      <field type="uint8_t" name="wfb_tx_state" enum="AEROTHON_PIPELINE_STATE">Air-side WFB-ng process state.</field>
+      <field type="uint8_t" name="video_link_state" enum="AEROTHON_LINK_STATE">Video channel health.</field>
+      <field type="uint8_t" name="telemetry_link_state" enum="AEROTHON_LINK_STATE">Telemetry channel health.</field>
+    </message>
+    <message id="61004" name="AEROTHON_COMMAND">
+      <description>Request to the Axon mission controller. Every request requires AEROTHON_COMMAND_ACK.</description>
+      <field type="uint32_t" name="request_id">GCS-generated session-unique request ID.</field>
+      <field type="float" name="param1">Command-specific parameter, NaN when unused.</field>
+      <field type="float" name="param2">Command-specific parameter, NaN when unused.</field>
+      <field type="uint8_t" name="target_system">Target MAVLink system ID.</field>
+      <field type="uint8_t" name="target_component">Target Axon component ID.</field>
+      <field type="uint8_t" name="command" enum="AEROTHON_COMMAND_TYPE">Requested action.</field>
+      <field type="uint8_t" name="confirmation">Incremented retry count.</field>
+    </message>
+    <message id="61005" name="AEROTHON_COMMAND_ACK">
+      <description>Axon acknowledgement for an AEROTHON_COMMAND request.</description>
+      <field type="uint32_t" name="request_id">Request ID being acknowledged.</field>
+      <field type="uint16_t" name="reason_code">Zero or implementation-defined rejection/failure reason.</field>
+      <field type="uint8_t" name="command" enum="AEROTHON_COMMAND_TYPE">Acknowledged command.</field>
+      <field type="uint8_t" name="result" enum="AEROTHON_ACK_RESULT">Command result.</field>
+      <field type="uint8_t" name="progress_pct" units="%" minValue="0" maxValue="100">Progress for in-progress commands.</field>
+      <field type="char[48]" name="message">Operator-readable result detail.</field>
+    </message>
+    <message id="61006" name="AEROTHON_PREFLIGHT_RESULT">
+      <description>One Axon preflight check result. A complete report is seq 0..total-1 sharing a single request_id; the GCS reconstructs and grades the set. Emitted only in response to an AEROTHON_COMMAND with command AEROTHON_COMMAND_START_PREFLIGHT.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp since boot or UNIX epoch.</field>
+      <field type="uint32_t" name="request_id">Request ID this check belongs to.</field>
+      <field type="uint8_t" name="seq">Ordinal of this check within the report, starting at 0.</field>
+      <field type="uint8_t" name="total">Total number of checks in this report.</field>
+      <field type="char[20]" name="check_id">Stable check key (cpu, ram, temp, storage, vision, fpv, nadir, wfb_link).</field>
+      <field type="char[16]" name="group">Functional group (AXON, CAMERAS, LINK, VISION).</field>
+      <field type="uint8_t" name="status" enum="AEROTHON_CHECK_STATUS">Check result.</field>
+      <field type="float" name="value">Numeric detail, NaN when none applies.</field>
+      <field type="char[64]" name="detail">Operator-readable detail.</field>
+    </message>
+  </messages>
+</mavlink>

@@ -1,0 +1,20 @@
+[Unit]
+Description=AeroTHON Companion Health Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/aerothon
+ExecStart=/opt/aerothon/venv/bin/python /opt/aerothon/health_service.py
+Environment=AEROTHON_PORT=5080
+Environment=AEROTHON_HOST=0.0.0.0
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aerothon-health
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,38 @@
+--- src/FlyView/FlyViewMap.qml
++++ src/FlyView/FlyViewMap.qml
+@@ -39,6 +39,26 @@
+                 _updateVehiclePosition();
++                _updateMissionItems();
+             }
+         }
+     }
+ 
+     Item { id: _pipState }
+     
++    Connections {
++        target: _planMasterController ? _planMasterController.missionController : null
++        onVisualItemsChanged: _updateMissionItems()
++    }
++
+     function _updateVehiclePosition() {
+@@ -51,6 +71,20 @@
+         }
+     }
+ 
++    function _updateMissionItems() {
++        if (!_planMasterController || !_planMasterController.missionController) return;
++        var items = _planMasterController.missionController.visualItems;
++        if (!items) return;
++        var jsonItems = [];
++        for (var i = 0; i < items.count; i++) {
++            var item = items.get(i);
++            if (item && item.coordinate && item.coordinate.isValid) {
++                jsonItems.push({lat: item.coordinate.latitude, lon: item.coordinate.longitude});
++            }
++        }
++        webEngineView.runJavaScript("if (window.updateMissionItems) { window.updateMissionItems('" + JSON.stringify(jsonItems) + "'); }");
++    }
++
+     Timer {
+         interval: 100 // 10Hz
+         running: true

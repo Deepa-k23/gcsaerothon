@@ -1,0 +1,7 @@
+module AeroTHON.Theme
+singleton AeroColors 1.0 AeroColors.qml
+singleton AeroTypography 1.0 AeroTypography.qml
+singleton AeroMetrics 1.0 AeroMetrics.qml
+singleton AeroMotion 1.0 AeroMotion.qml
+singleton AeroChartStyle 1.0 AeroChartStyle.qml
+AeroFonts 1.0 AeroFonts.qml

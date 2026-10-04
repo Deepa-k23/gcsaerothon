@@ -1,0 +1,17 @@
+module AeroTHON.Components
+
+AeroTechnicalFrame 1.0 AeroTechnicalFrame.qml
+AeroButton         1.0 AeroButton.qml
+AeroStatusDot      1.0 AeroStatusDot.qml
+AeroDataCard       1.0 AeroDataCard.qml
+AeroSparkline      1.0 AeroSparkline.qml
+AeroRingGauge      1.0 AeroRingGauge.qml
+AeroMessageRow     1.0 AeroMessageRow.qml
+AeroPreflightRow   1.0 AeroPreflightRow.qml
+AeroBadge          1.0 AeroBadge.qml
+AeroDivider        1.0 AeroDivider.qml
+AeroTrendIndicator 1.0 AeroTrendIndicator.qml
+AeroPanel          1.0 AeroPanel.qml
+AeroSectionHeader  1.0 AeroSectionHeader.qml
+AeroStatusChip     1.0 AeroStatusChip.qml
+AeroMetric         1.0 AeroMetric.qml

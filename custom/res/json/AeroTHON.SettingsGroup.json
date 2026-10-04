@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "fileType": "FactMetaData",
+    "QGC.MetaData.Facts": [
+        { "name": "axonHost",                "shortDesc": "Axon Host",              "label": "Axon Host",                "type": "string", "default": "" },
+        { "name": "axonPort",                "shortDesc": "Axon Port",              "label": "Axon Port",                "type": "uint32", "default": 5080 },
+        { "name": "axonConnectTimeout",      "shortDesc": "Connect timeout ms",     "label": "Connect Timeout",          "type": "uint32", "default": 2000 },
+        { "name": "axonReadTimeout",         "shortDesc": "Read timeout ms",        "label": "Read Timeout",             "type": "uint32", "default": 5000 },
+        { "name": "axonPollInterval",        "shortDesc": "Poll interval ms",       "label": "Health Poll Interval",     "type": "uint32", "default": 1000 },
+        { "name": "reduceMotion",            "shortDesc": "Reduce Motion",          "label": "Reduce Motion",            "type": "bool",   "default": false },
+        { "name": "altitudeAnnouncements",       "shortDesc": "Periodic altitude voice announcements while flying", "label": "Altitude Announcements",          "type": "bool",   "default": true },
+        { "name": "altitudeAnnouncementInterval", "shortDesc": "Seconds between altitude announcements", "label": "Altitude Announcement Interval", "type": "uint32", "default": 4, "min": 1, "max": 60, "units": "s" },
+        { "name": "telemetryWindowAltitude", "shortDesc": "Altitude chart window",  "label": "Altitude History Window",  "type": "uint32", "default": 25 },
+        { "name": "telemetryWindowSpeed",    "shortDesc": "Speed chart window",     "label": "Speed History Window",     "type": "uint32", "default": 25 },
+        { "name": "telemetryWindowBattery",  "shortDesc": "Battery chart window",   "label": "Battery History Window",   "type": "uint32", "default": 45 },
+        { "name": "telemetryWindowWFB",      "shortDesc": "WFB chart window",       "label": "WFB History Window",       "type": "uint32", "default": 25 },
+        { "name": "droneName",              "shortDesc": "Drone name displayed in the UI header",  "label": "Drone Name",   "type": "string", "default": "AeroTHON-01" },
+        { "name": "camera1Name",            "shortDesc": "Camera 1 display name",  "label": "Camera 1 Name",            "type": "string", "default": "OAK D Lite" },
+        { "name": "camera2Name",            "shortDesc": "Camera 2 display name",  "label": "Camera 2 Name",            "type": "string", "default": "Arducam" }
+    ]
+}

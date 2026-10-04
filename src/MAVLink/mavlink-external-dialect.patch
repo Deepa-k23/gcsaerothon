@@ -1,0 +1,46 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -25,7 +25,30 @@
+ endif()
+ message(STATUS "MAVLink version: ${MAVLINK_VERSION}")
+ 
+-set(EXAMPLE_HEADER ${CMAKE_CURRENT_BINARY_DIR}/include/mavlink/${MAVLINK_DIALECT}/mavlink.h)
++if (MAVLINK_DIALECT_FILE)
++    if (NOT IS_ABSOLUTE "${MAVLINK_DIALECT_FILE}")
++        message(FATAL_ERROR "MAVLINK_DIALECT_FILE must be an absolute path")
++    endif()
++    if (NOT EXISTS "${MAVLINK_DIALECT_FILE}")
++        message(FATAL_ERROR "MAVLink dialect file not found: ${MAVLINK_DIALECT_FILE}")
++    endif()
++
++    # mavgen resolves included dialects relative to the root XML. Stage the custom
++    # dialect beside the pinned upstream definitions without modifying the CPM source tree.
++    set(MAVLINK_DEFINITION_DIR "${CMAKE_CURRENT_BINARY_DIR}/message_definitions/v1.0")
++    file(MAKE_DIRECTORY "${MAVLINK_DEFINITION_DIR}")
++    configure_file("${MAVLINK_DIALECT_FILE}" "${MAVLINK_DEFINITION_DIR}/${MAVLINK_DIALECT}.xml" COPYONLY)
++    file(GLOB MAVLINK_UPSTREAM_DEFINITIONS
++         CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/message_definitions/v1.0/*.xml")
++    foreach(MAVLINK_UPSTREAM_DEFINITION IN LISTS MAVLINK_UPSTREAM_DEFINITIONS)
++        configure_file("${MAVLINK_UPSTREAM_DEFINITION}" "${MAVLINK_DEFINITION_DIR}" COPYONLY)
++    endforeach()
++    set(MAVLINK_DIALECT_XML "${MAVLINK_DEFINITION_DIR}/${MAVLINK_DIALECT}.xml")
++else()
++    set(MAVLINK_DIALECT_XML "${CMAKE_CURRENT_SOURCE_DIR}/message_definitions/v1.0/${MAVLINK_DIALECT}.xml")
++endif()
++
++set(EXAMPLE_HEADER ${CMAKE_CURRENT_BINARY_DIR}/include/mavlink/${MAVLINK_DIALECT}/mavlink.h)
+ 
+ add_custom_command(OUTPUT ${EXAMPLE_HEADER}
+     COMMAND ${Python_EXECUTABLE}
+@@ -35,9 +58,9 @@
+         --lang=C
+         --wire-protocol=${MAVLINK_VERSION}
+         --output ${CMAKE_CURRENT_BINARY_DIR}/include/mavlink/
+-        message_definitions/v1.0/${MAVLINK_DIALECT}.xml
++        "${MAVLINK_DIALECT_XML}"
+         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+-    DEPENDS message_definitions/v1.0/${MAVLINK_DIALECT}.xml
++    DEPENDS "${MAVLINK_DIALECT_FILE}" "${MAVLINK_DIALECT_XML}"
+     COMMENT "Generating C headers")
+ 
+ # Unfortunately, the dependencies don't work for INTERFACE libraries.
